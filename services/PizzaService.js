@@ -7,4 +7,4 @@ class PizzaService extends BaseService {
 	}
 }
 
-export default new PizzaService();
+module.exports = new PizzaService();

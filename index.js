@@ -17,7 +17,7 @@ mongoose.connect(
 	}
 );
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 routes(app);
 

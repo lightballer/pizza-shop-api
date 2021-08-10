@@ -1,25 +1,25 @@
-export default class BaseService {
+module.exports = class BaseService {
 	constructor(repositoryType) {
 		this.repositoryType = repositoryType;
 	}
 	async getAll() {
-		const allItems = await repositoryType.getAll();
+		const allItems = await this.repositoryType.getAll();
 		return allItems;
 	}
 	async getOne(id) {
-		const item = await repositoryType.getOne(id);
+		const item = await this.repositoryType.getOne(id);
 		return item;
 	}
 	async create(data) {
-		const newItem = await repositoryType.create(data);
+		const newItem = await this.repositoryType.create(data);
 		return newItem;
 	}
-	async update(newData) {
-		const updatedItem = await repositoryType.update(newData);
+	async update(id, newData) {
+		const updatedItem = await this.repositoryType.update(newData);
 		return updatedItem;
 	}
 	async delete(id) {
-		const deletedItem = await repositoryType.delete(id);
+		const deletedItem = await this.repositoryType.delete(id);
 		return deletedItem;
 	}
-}
+};

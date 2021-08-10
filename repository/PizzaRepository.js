@@ -6,4 +6,4 @@ class PizzaRepository extends BaseRepository {
 	}
 }
 
-export default new PizzaRepository();
+module.exports = new PizzaRepository();

@@ -1,10 +1,10 @@
-export default class BaseRepository {
+module.exports = class BaseRepository {
 	constructor(model) {
 		this.model = model;
 	}
 	getOne(id) {}
 	getAll() {}
 	create(data) {}
-	update(newData) {}
+	update(id, newData) {}
 	delete(id) {}
-}
+};

@@ -1,34 +1,58 @@
 const { Router } = require('express');
+const OrdersService = require('../services/OrdersService');
 
 const router = Router();
+const SUCCESS = 200;
+const NOT_FOUND = 404;
 
-router.get('/', (req, res, next) => {
-	const userId = req.query.userId;
-	let result = `get all orders`;
-	if (userId) result = `get orders by userId ${req.query.userId}`;
-	res.send(result);
-
-	// const { id, userId } = req.query;
-	// let result = `get all orders`;
-	// if (id) result = `get order by id ${req.params.id}`;
-	// if (userId) result = `get all orders from user ${userId}`;
-	// res.send(result);
+router.get('/', async (req, res, next) => {
+	try {
+		const orders = await OrdersService.getAll();
+		res.status(SUCCESS).json(orders);
+	} catch (err) {
+		res.status(NOT_FOUND).json({ error: true, message: err.message });
+	}
 });
 
-// router.get('/:id', (req, res, next) => {
-//   res.send(`get order by id ${req.params.id}`);
-// });
-
-router.post('/', (req, res, next) => {
-	res.send(`create new order`);
+router.get('/:id', async (req, res, next) => {
+	const id = req.params.id;
+	try {
+		const order = await OrdersService.getOne(id);
+		res.status(SUCCESS).json(order);
+	} catch (err) {
+		res.status(NOT_FOUND).json({ error: true, message: err.message });
+	}
 });
 
-router.put('/:id', (req, res, next) => {
-	res.send(`update new order by id ${req.params.id}`);
+router.post('/', async (req, res, next) => {
+	const newData = { ...req.body };
+	try {
+		const newOrder = await OrderService.create(newData);
+		res.status(200).json(newOrder);
+	} catch (err) {
+		res.status(NOT_FOUND).json({ error: true, message: err.message });
+	}
 });
 
-router.delete('/:id', (req, res, next) => {
-	res.send(`delete order by id ${req.params.id}`);
+router.put('/:id', async (req, res, next) => {
+	const id = req.params.id;
+	const newData = req.body;
+	try {
+		const updatedOrder = await OrderService.update(id, newData);
+		res.status(200).json(updatedOrder);
+	} catch (err) {
+		res.status(NOT_FOUND).json({ error: true, message: err.message });
+	}
+});
+
+router.delete('/:id', async (req, res, next) => {
+	const id = req.params.id;
+	try {
+		const deletedOrder = await OrderService.delete(id);
+		res.status(200).json(deletedOrder);
+	} catch (err) {
+		res.status(NOT_FOUND).json({ error: true, message: err.message });
+	}
 });
 
 module.exports = router;

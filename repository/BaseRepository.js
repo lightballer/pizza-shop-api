@@ -1,10 +1,41 @@
 module.exports = class BaseRepository {
-	constructor(model) {
-		this.model = model;
-	}
-	getOne(id) {}
-	getAll() {}
-	create(data) {}
-	update(id, newData) {}
-	delete(id) {}
+  constructor(Model) {
+    this.Model = Model;
+  }
+
+  async getAll() {
+    const allItems = await this.Model.find();
+    return allItems;
+  }
+
+  async getOne(id) {
+    return this.findItem(id);
+  }
+
+  async create(data) {
+    const newRecord = new this.Model({
+      ...data,
+    });
+    const newItem = await newRecord.save();
+    return newItem;
+  }
+
+  async update(id, newData) {
+    const item = await this.findItem(id);
+    if (!item) return null;
+    newData.map(line => (item[line] = newData[line]));
+    const updatedItem = await item.save();
+    return updatedItem;
+  }
+
+  async delete(id) {
+    const item = await this.findItem(id);
+    const deletedItem = await item.remove();
+    return deletedItem;
+  }
+
+  async findItem(id) {
+    const item = await this.Model.findById(id);
+    return item;
+  }
 };

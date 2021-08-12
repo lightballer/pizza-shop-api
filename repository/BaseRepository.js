@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 module.exports = class BaseRepository {
   constructor(Model) {
     this.Model = Model;
@@ -23,8 +25,16 @@ module.exports = class BaseRepository {
   async update(id, newData) {
     const item = await this.findItem(id);
     if (!item) return null;
-    newData.map(line => (item[line] = newData[line]));
-    const updatedItem = await item.save();
+    const updatedItem = await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          ...newData,
+        },
+      }
+    );
     return updatedItem;
   }
 

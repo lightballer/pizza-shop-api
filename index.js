@@ -18,7 +18,6 @@ mongoose.connect(
 );
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
-// db.once('open', () => console.log('Opened database'));
 
 app.use(express.json());
 

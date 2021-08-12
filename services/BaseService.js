@@ -15,7 +15,7 @@ module.exports = class BaseService {
     return newItem;
   }
   async update(id, newData) {
-    const updatedItem = await this.repositoryType.update(newData);
+    const updatedItem = await this.repositoryType.update(id, newData);
     return updatedItem;
   }
   async delete(id) {

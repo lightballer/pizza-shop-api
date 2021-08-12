@@ -27,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const newData = { ...req.body };
   try {
-    const newOrder = await OrderService.create(newData);
+    const newOrder = await OrdersService.create(newData);
     res.status(200).json(newOrder);
   } catch (err) {
     res.status(NOT_FOUND).json({ error: true, message: err.message });
@@ -38,7 +38,7 @@ router.put('/:id', async (req, res, next) => {
   const id = req.params.id;
   const newData = req.body;
   try {
-    const updatedOrder = await OrderService.update(id, newData);
+    const updatedOrder = await OrdersService.update(id, newData);
     res.status(200).json(updatedOrder);
   } catch (err) {
     res.status(NOT_FOUND).json({ error: true, message: err.message });
@@ -48,7 +48,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
-    const deletedOrder = await OrderService.delete(id);
+    const deletedOrder = await OrdersService.delete(id);
     res.status(200).json(deletedOrder);
   } catch (err) {
     res.status(NOT_FOUND).json({ error: true, message: err.message });

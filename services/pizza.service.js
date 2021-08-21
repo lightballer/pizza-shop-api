@@ -1,5 +1,5 @@
-const BaseService = require('./BaseService');
-const PizzaRepository = require('../repository/PizzaRepository');
+const BaseService = require('./base.service');
+const PizzaRepository = require('../repository/pizza.repository');
 
 class PizzaService extends BaseService {
   constructor() {

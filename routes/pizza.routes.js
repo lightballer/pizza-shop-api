@@ -1,16 +1,16 @@
 const Router = require('express');
-const PizzaService = require('../services/PizzaService');
+const PizzaService = require('../services/pizza.service');
+const pizzaValidation = require('../middlewares/pizza-validation.middleware');
+const { SUCCESS_STATUS } = require('../constants');
 
 const router = Router();
-const SUCCESS = 200;
-const NOT_FOUND = 404;
 
 router.get('/', async (req, res, next) => {
   try {
     const pizzas = await PizzaService.getAll();
-    res.status(SUCCESS).json(pizzas);
+    res.status(SUCCESS_STATUS).json(pizzas);
   } catch (err) {
-    res.status(NOT_FOUND).json({ error: true, message: err.message });
+    next(err);
   }
 });
 
@@ -18,30 +18,32 @@ router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
     const pizza = await PizzaService.getOne(id);
-    res.status(SUCCESS).json(pizza);
+    res.status(SUCCESS_STATUS).json(pizza);
   } catch (err) {
-    res.status(NOT_FOUND).json({ error: true, message: err.message });
+    next(err);
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', pizzaValidation, async (req, res, next) => {
   const newData = { ...req.body };
   try {
+    const validationError = res.locals.err;
+    if (validationError) throw validationError;
     const newPizza = await PizzaService.create(newData);
-    res.status(SUCCESS).json(newPizza);
+    res.status(SUCCESS_STATUS).json(newPizza);
   } catch (err) {
-    res.status(NOT_FOUND).json({ error: true, message: err.message });
+    next(err);
   }
 }); // for admin
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', pizzaValidation, async (req, res, next) => {
   const id = req.params.id;
   const newData = req.body;
   try {
     const updatedPizza = await PizzaService.update(id, newData);
-    res.status(SUCCESS).json(updatedPizza);
+    res.status(SUCCESS_STATUS).json(updatedPizza);
   } catch (err) {
-    res.status(NOT_FOUND).json({ error: true, message: err.message });
+    next(err);
   }
 }); // for admin
 
@@ -49,9 +51,9 @@ router.delete('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
     const deletedPizza = await PizzaService.delete(id);
-    res.status(SUCCESS).json(deletedPizza);
+    res.status(SUCCESS_STATUS).json(deletedPizza);
   } catch (err) {
-    res.status(NOT_FOUND).json({ error: true, message: err.message });
+    next(err);
   }
 }); // for admin
 

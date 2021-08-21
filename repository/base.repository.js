@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 module.exports = class BaseRepository {
   constructor(Model) {
     this.Model = Model;

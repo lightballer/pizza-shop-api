@@ -1,4 +1,4 @@
-const BaseRepository = require('./BaseRepository');
+const BaseRepository = require('./base.repository');
 const Order = require('../models/Order');
 
 class OrdersRepository extends BaseRepository {

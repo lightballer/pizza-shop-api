@@ -1,40 +1,51 @@
-const pizzaValidation = (req, res, next) => {
-  const body = req.body;
+const pizzaValidation = data => {
   try {
-    if (!body.name) {
+    const {
+      name,
+      description,
+      image_url,
+      price_small,
+      price_medium,
+      price_large,
+    } = data;
+
+    if (!name) {
       throw new Error('name is required');
     }
-    if (!body.description) {
+    if (!description) {
       throw new Error('description is required');
     }
-    if (!body.image_url) {
+    if (!image_url) {
       throw new Error('image_url is required');
     }
 
-    if (!body.price_small) {
+    if (!price_small) {
       throw new Error('price_small is required');
     }
-    if (typeof body.price_small !== 'number') {
+    if (typeof price_small !== 'number') {
       throw new Error('price_small should be a number');
     }
 
-    if (!body.price_medium) {
+    if (!price_medium) {
       throw new Error('price_medium is required');
     }
-    if (typeof body.price_medium !== 'number') {
+    if (typeof price_medium !== 'number') {
       throw new Error('price_medium should be a number');
     }
 
-    if (!body.price_large) {
+    if (!price_large) {
       throw new Error('price_large is required');
     }
-    if (typeof body.price_large !== 'number') {
+    if (typeof price_large !== 'number') {
       throw new Error('price_large should be a number');
     }
   } catch (err) {
-    res.locals.err = err;
-    next();
+    return {
+      error: true,
+      message: err.message,
+    };
   }
+  return null;
 };
 
 module.exports = pizzaValidation;

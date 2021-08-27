@@ -9,7 +9,7 @@ module.exports = class BaseRepository {
   }
 
   async getOne(id) {
-    return this.findItem(id);
+    return await this.findItem(id);
   }
 
   async create(data) {
@@ -23,7 +23,7 @@ module.exports = class BaseRepository {
   async update(id, newData) {
     const item = await this.findItem(id);
     if (!item) return null;
-    const updatedItem = await this.Model.updateOne(
+    const updateInfo = await this.Model.updateOne(
       {
         _id: id,
       },
@@ -33,11 +33,12 @@ module.exports = class BaseRepository {
         },
       }
     );
-    return updatedItem;
+    return this.findItem(id);
   }
 
   async delete(id) {
     const item = await this.findItem(id);
+    if (!item) return null;
     const deletedItem = await item.remove();
     return deletedItem;
   }

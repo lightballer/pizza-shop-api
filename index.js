@@ -1,9 +1,8 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv/config');
 
-const routes = require('./routes/index');
+const routes = require('./src/routes/index');
 
 const app = express();
 
@@ -26,3 +25,5 @@ routes(app);
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+
+module.exports = app;

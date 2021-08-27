@@ -1,35 +1,38 @@
 {
-	"name": "pizza-shop-api",
-	"version": "1.0.0",
-	"description": "RESTful api for pizza shop on NodeJS-Express-Mongo stack",
-	"main": "index.js",
-	"scripts": {
-		"dev": "nodemon index.js",
-		"start": "node index.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/lightballer/pizza-shop-api.git"
-	},
-	"keywords": [
-		"node",
-		"js",
-		"nodejs",
-		"mongo",
-		"express"
-	],
-	"author": "Artem Bokii",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/lightballer/pizza-shop-api/issues"
-	},
-	"homepage": "https://github.com/lightballer/pizza-shop-api#readme",
-	"dependencies": {
-		"body-parser": "^1.19.0",
-		"dotenv": "^10.0.0",
-		"express": "^4.17.1",
-		"express-validator": "^6.12.1",
-		"mongoose": "^5.13.5",
-		"nodemon": "^2.0.12"
-	}
+  "name": "pizza-shop-api",
+  "version": "1.0.0",
+  "description": "RESTful api for pizza shop on NodeJS-Express-Mongo stack",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "mocha tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightballer/pizza-shop-api.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "nodejs",
+    "mongo",
+    "express"
+  ],
+  "author": "Artem Bokii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lightballer/pizza-shop-api/issues"
+  },
+  "homepage": "https://github.com/lightballer/pizza-shop-api#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.5",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "mocha": "^9.1.0",
+    "supertest": "^6.1.6"
+  }
 }

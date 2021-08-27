@@ -1,4 +1,0 @@
-const SUCCESS_STATUS = 200;
-const NOT_FOUND_STATUS = 404;
-
-module.exports = { SUCCESS_STATUS, NOT_FOUND_STATUS };

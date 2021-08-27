@@ -16,10 +16,12 @@ module.exports = class BaseService {
   }
   async update(id, newData) {
     const updatedItem = await this.repositoryType.update(id, newData);
+    if (!updatedItem) throw new Error('No such record in database');
     return updatedItem;
   }
   async delete(id) {
     const deletedItem = await this.repositoryType.delete(id);
+    if (!deletedItem) throw new Error('No such record in database');
     return deletedItem;
   }
 };

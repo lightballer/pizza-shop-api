@@ -1,12 +1,13 @@
 const { Router } = require('express');
-const UsersService = require('../services/users.service');
+const UserService = require('../services/user.service');
+const userValidator = require('../validators/user.validator');
 const { SUCCESS_STATUS } = require('../constants');
 
 const router = Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await UsersService.getAll();
+    const users = await UserService.getAll();
     res.status(SUCCESS_STATUS).json(users);
   } catch (err) {
     next(err);
@@ -16,7 +17,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
-    const user = await UsersService.getOne(id);
+    const user = await UserService.getOne(id);
     res.status(SUCCESS_STATUS).json(user);
   } catch (err) {
     next(err);
@@ -26,7 +27,8 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const newData = { ...req.body };
   try {
-    const newUser = await UsersService.create(newData);
+    userValidator(newData);
+    const newUser = await UserService.createUser(newData);
     res.status(SUCCESS_STATUS).json(newUser);
   } catch (err) {
     next(err);
@@ -35,9 +37,10 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   const id = req.params.id;
-  const newData = req.body;
+  const newData = { ...req.body };
   try {
-    const updatedUser = await UsersService.update(id, newData);
+    userValidator(newData);
+    const updatedUser = await UserService.update(id, newData);
     res.status(SUCCESS_STATUS).json(updatedUser);
   } catch (err) {
     next(err);
@@ -47,7 +50,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
-    const deletedUser = await UsersService.delete(id);
+    const deletedUser = await UserService.delete(id);
     res.status(SUCCESS_STATUS).json(deletedUser);
   } catch (err) {
     next(err);

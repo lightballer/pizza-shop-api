@@ -11,7 +11,7 @@ class PizzaService extends BaseService {
       name: data.name,
     });
     if (existingItem) throw new Error('Pizza with this name already exists');
-    const createdPizza = await super.create(data);
+    const createdPizza = await super._create(data);
     return createdPizza;
   }
 }

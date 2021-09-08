@@ -1,7 +1,7 @@
 const Router = require('express');
 
 const PizzaService = require('../services/pizza.service');
-const pizzaValidation = require('../validators/pizza-validation');
+const pizzaValidator = require('../validators/pizza.validator');
 const { SUCCESS_STATUS } = require('../constants');
 
 const router = Router();
@@ -26,10 +26,9 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-  const newData = req.body;
-  const validationError = pizzaValidation(newData);
+  const newData = { ...req.body };
   try {
-    if (validationError) throw validationError;
+    pizzaValidator(newData);
     const newPizza = await PizzaService.createPizza(newData);
     res.status(SUCCESS_STATUS).json(newPizza);
   } catch (err) {
@@ -39,10 +38,9 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   const id = req.params.id;
-  const newData = req.body;
-  const validationError = pizzaValidation(newData);
+  const newData = { ...req.body };
   try {
-    if (validationError) throw validationError;
+    pizzaValidator(newData);
     const updatedPizza = await PizzaService.update(id, newData);
     res.status(SUCCESS_STATUS).json(updatedPizza);
   } catch (err) {

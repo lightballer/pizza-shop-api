@@ -1,12 +1,13 @@
 const { Router } = require('express');
-const OrdersService = require('../services/orders.service');
+const OrderService = require('../services/order.service');
+const orderValidator = require('../validators/order.validator');
 const { SUCCESS_STATUS } = require('../constants');
 
 const router = Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await OrdersService.getAll();
+    const orders = await OrderService.getAll();
     res.status(SUCCESS_STATUS).json(orders);
   } catch (err) {
     next(err);
@@ -16,7 +17,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
-    const order = await OrdersService.getOne(id);
+    const order = await OrderService.getOne(id);
     res.status(SUCCESS_STATUS).json(order);
   } catch (err) {
     next(err);
@@ -26,7 +27,8 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const newData = { ...req.body };
   try {
-    const newOrder = await OrdersService.create(newData);
+    orderValidator(newData);
+    const newOrder = await OrderService.createOrder(newData);
     res.status(SUCCESS_STATUS).json(newOrder);
   } catch (err) {
     next(err);
@@ -35,9 +37,10 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   const id = req.params.id;
-  const newData = req.body;
+  const newData = { ...req.body };
   try {
-    const updatedOrder = await OrdersService.update(id, newData);
+    orderValidator(newData);
+    const updatedOrder = await OrderService.update(id, newData);
     res.status(SUCCESS_STATUS).json(updatedOrder);
   } catch (err) {
     next(err);
@@ -47,7 +50,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
-    const deletedOrder = await OrdersService.delete(id);
+    const deletedOrder = await OrderService.delete(id);
     res.status(SUCCESS_STATUS).json(deletedOrder);
   } catch (err) {
     next(err);

@@ -10,7 +10,7 @@ module.exports = class BaseService {
     const item = await this.repository.getOne(id);
     return item;
   }
-  async _create(data) {
+  async create(data) {
     const newItem = await this.repository.create(data);
     return newItem;
   }

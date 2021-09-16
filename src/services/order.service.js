@@ -5,10 +5,6 @@ class OrdersService extends BaseService {
   constructor() {
     super(OrdersRepository);
   }
-  async createOrder(data) {
-    const newOrder = await super._create(data);
-    return newOrder;
-  }
 }
 
 module.exports = new OrdersService();

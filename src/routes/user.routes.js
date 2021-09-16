@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
   const newData = { ...req.body };
   try {
     userValidator(newData);
-    const newUser = await UserService.createUser(newData);
+    const newUser = await UserService.create(newData);
     res.status(SUCCESS_STATUS).json(newUser);
   } catch (err) {
     next(err);

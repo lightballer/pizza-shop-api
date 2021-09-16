@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
   const newData = { ...req.body };
   try {
     orderValidator(newData);
-    const newOrder = await OrderService.createOrder(newData);
+    const newOrder = await OrderService.create(newData);
     res.status(SUCCESS_STATUS).json(newOrder);
   } catch (err) {
     next(err);

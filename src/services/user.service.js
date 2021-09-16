@@ -6,14 +6,14 @@ class UsersService extends BaseService {
   constructor() {
     super(UsersRepository);
   }
-  async createUser(data) {
+  async create(data) {
     const existingUser = await User.findOne({
       $or: [{ email: data.email }, { phone: data.phone }],
     });
 
     if (existingUser)
       throw new Error('user with the same email or phone already exists');
-    const createdUser = await super._create(data);
+    const createdUser = await super.create(data);
     return createdUser;
   }
 }

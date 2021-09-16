@@ -6,12 +6,12 @@ class PizzaService extends BaseService {
   constructor() {
     super(PizzaRepository);
   }
-  async createPizza(data) {
+  async create(data) {
     const existingItem = await Pizza.findOne({
       name: data.name,
     });
     if (existingItem) throw new Error('Pizza with this name already exists');
-    const createdPizza = await super._create(data);
+    const createdPizza = await super.create(data);
     return createdPizza;
   }
 }

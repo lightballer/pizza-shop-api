@@ -29,7 +29,7 @@ router.post('/', async (req, res, next) => {
   const newData = { ...req.body };
   try {
     pizzaValidator(newData);
-    const newPizza = await PizzaService.createPizza(newData);
+    const newPizza = await PizzaService.create(newData);
     res.status(SUCCESS_STATUS).json(newPizza);
   } catch (err) {
     next(err);

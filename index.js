@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv/config');
 
 const routes = require('./src/routes/index');
@@ -19,6 +20,11 @@ const db = mongoose.connection;
 db.on('error', error => console.error(error));
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 routes(app);
 
